@@ -1,0 +1,52 @@
+---
+title: "Models"
+description: "ClosedRouter provides access to leading LLMs from OpenAI and Anthropic through a single unified API."
+---
+
+ClosedRouter gives you access to **two major model providers** under one API key:
+
+-\> **OpenAI Models** : GPT family optimized for general-purpose reasoning, code generation, and structured outputs.\
+-\> **Anthropic Models** : Claude family optimized for long context, safe alignment, and balanced reasoning.
+
+### OpenAI Models
+
+ClosedRouter supports the latest OpenAI models, including:
+
+-\> **gpt-4** : High reasoning and creativity, useful for complex problem solving.  \
+-\> **gpt-4o-mini** : Lightweight and cost-efficient version, suitable for fast responses.  
+
+These models are accessed with the provider name `openai`.
+
+### Anthropic Models
+
+ClosedRouter also integrates **Anthropic Claude** models:
+
+-\> **claude-3-sonnet** : Balanced tradeoff between performance and cost, suitable for most general tasks.  \
+-\> **claude-3-opus** : Most capable Claude model, useful for deep reasoning and long-form analysis.  
+
+These models are accessed with the provider name `anthropic`.
+
+### Choosing the Right Model
+
+-\> Use **OpenAI GPT-4** if you need structured outputs, coding help, or multi-turn conversations. \
+-\> Use **Anthropic Claude** if you need safer outputs, longer context, or interpretability.  
+
+### Example: Selecting a Model
+
+You can directly pass the model ID when making a request:
+
+```bash
+curl https://api.closedrouter.io/v1/chat/completions \
+
+  -H "Authorization: Bearer $CLOSEDROUTER_API_KEY" \
+
+  -H "Content-Type: application/json" \
+
+  -d '{
+
+    "model": "gpt-4",
+
+    "messages": [{"role":"user","content":"Hello, world!"}]
+
+  }'
+```
