@@ -1,0 +1,147 @@
+---
+title: "Anthropic Models"
+---
+
+The following Anthropic models are supported:
+
+- `claude-3-opus-20240229` 
+- `claude-3-5-sonnet-20241022`
+
+### Chat
+
+Use this endpoint to send a single-turn or multi-turn chat request.
+
+```bash
+curl https://api.closedrouter.com/v1/chat/completions \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "anthropic/claude-3-opus-20240229",
+    "messages": [
+      {"role": "system", "content": "You are a helpful assistant."},
+      {"role": "user", "content": "Hello! Can you tell me a joke about programming?"}
+    ],
+    "temperature": 0.7,
+    "max_tokens": 150
+  }'
+```
+
+### Streaming Responses
+
+Set `"stream": true` to receive partial tokens in real time.\
+This is useful for chat interfaces where users want instant feedback.
+
+```bash
+curl https://api.closedrouter.com/v1/chat/completions \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "anthropic/claude-3-5-sonnet-20241022",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explain quantum computing to a 10-year-old."
+      }
+    ],
+    "stream": true,
+    "max_tokens": 300
+  }'
+```
+
+### Tool Calling
+
+Supports **tool calls** that allow the model to decide when to invoke a function.  \
+This is useful for building agent-like workflows where the model decides how and when to call external APIs.
+
+```bash
+curl https://api.closedrouter.com/v1/chat/completions \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "anthropic/claude-3-5-sonnet-20241022",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Calculate 25 * 17"
+        }
+    ],
+    "tools": [
+        {
+            "type": "function",
+            "function": {
+                "name": "calculator",
+                "description": "Perform arithmetic operations",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "operation": {
+                            "type": "string",
+                            "enum": ["add", "subtract", "multiply", "divide"]
+                        },
+                        "a": {"type": "number"},
+                        "b": {"type": "number"}
+                    },
+                    "required": ["operation", "a", "b"]
+                }
+            }
+        }
+    ]
+}'
+```
+
+### 🏗 Structured Output
+
+ClosedRouter can force responses into a **strict JSON schema**, ensuring outputs are machine-readable.  \
+This helps when integrating AI into systems where you need predictable formats.
+
+```bash
+curl https://api.closedrouter.com/v1/chat/completions \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "anthropic/claude-3-5-sonnet-20241022",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Create a JSON object with information about a fictional user including name, age, email, and hobbies array"
+        }
+    ],
+    "response_format": {
+        "type": "json_object"
+    },
+    "max_tokens": 200
+}'
+```
+
+### 🖼 Image Generation
+
+Supports **vision models** where you can pass an image URL (or base64 data) along with text.\
+The model can then analyze, describe, or reason about the image.
+
+```bash
+curl https://api.closedrouter.com/v1/images/generations \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "anthropic/claude-3-5-sonnet-20241022",
+    "messages": [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "What do you see in this image?"
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+                        "detail": "high"
+                    }
+                }
+            ]
+        }
+    ],
+    "max_tokens": 300
+}'
+```
