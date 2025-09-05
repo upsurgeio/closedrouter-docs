@@ -1,6 +1,6 @@
 ---
 title: "Structured Outputs"
-description: "ClosedRouter supports structured outputs for compatible models, ensuring responses follow a strict JSON Schema.  
+description: "Pineapple supports structured outputs for compatible models, ensuring responses follow a strict JSON Schema.  
 This is especially useful when you need consistent, machine-readable responses in production pipelines."
 ---
 
@@ -58,7 +58,7 @@ The model will return a JSON object that strictly follows your schema:
 
 ### Model Support
 
-Structured outputs are supported on select ClosedRouter models:
+Structured outputs are supported on select Pineapple models:
 
 - **OpenAI** → `openai/gpt-4o`, `openai/gpt-4o-mini`
 - **Anthropic** → `anthropic/claude-3-5-sonnet-20241022`, `anthropic/claude-3-opus-20240229`
@@ -168,4 +168,4 @@ You may encounter:
 2. **Invalid JSON Schema** -\> Request rejected before completion.
 3. **Schema violation** -\> Response may fail validation in strict mode.
 
-With ClosedRouter, you can unify structured outputs across **OpenAI** and **Anthropic**, without needing different request formats.
+With Pineapple, you can unify structured outputs across **OpenAI** and **Anthropic**, without needing different request formats.

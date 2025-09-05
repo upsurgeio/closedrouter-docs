@@ -1,18 +1,18 @@
 ---
 title: "Models"
-description: "ClosedRouter provides access to leading LLMs from OpenAI and Anthropic through a single unified API."
+description: "Pineapple provides access to leading LLMs from OpenAI and Anthropic through a single unified API."
 ---
 
 # Models
 
-ClosedRouter gives you access to **two major model providers** under one API key:
+Pineapple gives you access to **two major model providers** under one API key:
 
 - **OpenAI Models** : GPT family optimized for general-purpose reasoning, code generation, and structured outputs
 - **Anthropic Models** : Claude family optimized for long context, safe alignment, and balanced reasoning
 
 ## 🤖 OpenAI Models
 
-ClosedRouter supports the latest OpenAI models, including:
+Pineapple supports the latest OpenAI models, including:
 
 ### GPT-4 Family
 
@@ -33,7 +33,7 @@ These models are accessed with the provider name `openai`.
 
 ## 🧠 Anthropic Models
 
-ClosedRouter integrates **Anthropic Claude** models:
+Pineapple integrates **Anthropic Claude** models:
 
 ### Claude 3 Family
 
@@ -81,7 +81,7 @@ These models are accessed with the provider name `anthropic`.
 
 ```bash
 curl https://api.closedrouter.io/v1/chat/openai \
-  -H "Authorization: Bearer $CLOSEDROUTER_API_KEY" \
+  -H "Authorization: Bearer $PINEAPPLE_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "gpt-4o",
@@ -95,7 +95,7 @@ curl https://api.closedrouter.io/v1/chat/openai \
 
 ```bash
 curl https://api.closedrouter.io/v1/chat/anthropic \
-  -H "Authorization: Bearer $CLOSEDROUTER_API_KEY" \
+  -H "Authorization: Bearer $PINEAPPLE_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "claude-3-sonnet",
@@ -149,7 +149,7 @@ You can retrieve all available models using the `/v1/models` endpoint:
 
 ```bash
 curl https://api.closedrouter.io/v1/models \
-  -H "Authorization: Bearer $CLOSEDROUTER_API_KEY"
+  -H "Authorization: Bearer $PINEAPPLE_API_KEY"
 ```
 
 This returns a list of all supported models with their capabilities and specifications.
@@ -165,7 +165,7 @@ This returns a list of all supported models with their capabilities and specific
 
 - **OpenAI models** follow OpenAI's safety guidelines and content policies
 - **Anthropic models** are designed with safety and alignment in mind
-- All models through ClosedRouter include built-in content filtering
+- All models through Pineapple include built-in content filtering
 - Enterprise users can configure custom safety settings
 
 ---
