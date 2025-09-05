@@ -1,0 +1,69 @@
+---
+title: "API Keys"
+description: "Manage API keys programmatically"
+---
+
+Pineapple lets you create and manage API keys programmatically.  \
+Keys are required for all authenticated requests to the `/chat/completions` endpoint and other Pineapple APIs.
+
+### **Creating a Provisioning API Key**
+
+To use the key management API, you first need to create a Provisioning API key:
+
+1. Go to the **<u>API keys page(link)</u>**
+2. Click “Create New Key”
+3. Complete the key creation process
+
+Provisioning keys cannot be used to make API calls to Pineapple's completion endpoints - they are exclusively for key management operations.
+
+### Example Usage
+
+<CodeGroup>
+
+```python python
+import requests
+
+BASE_URL = "https://api.pineapple.ai/api/v1/keys"
+API_KEY = "your-admin-key"
+
+response = requests.post(
+    BASE_URL,
+    headers={
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    },
+    json={
+        "name": "Production Key"
+    }
+)
+
+print(response.json())
+```
+
+
+```typescript typescript
+const BASE_URL = "https://api.pineapple.ai/api/v1/keys";
+const API_KEY = "your-admin-key";
+
+const createKey = await fetch(BASE_URL, {
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${API_KEY}`,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    name: "Production Key",
+  }),
+});
+
+console.log(await createKey.json());
+```
+
+</CodeGroup>
+
+### Response Format
+
+API responses return JSON objects containing key information:
+
+```
+```
