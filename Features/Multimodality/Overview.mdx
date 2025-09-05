@@ -17,23 +17,25 @@ Accepted formats: **URL** or **base64-encoded**.\
 [Read More about PDF processing -\>](/Features/Multimodality/PDFs)
 
 **Audio (Not Yet Supported)**\
-You can technically send audio in requests, but **Anthropic models do not process it**. No error will be thrown, it will simply be ignored. We recommend avoiding audio inputs for now until support is expanded.
+You can technically send audio in requests, but **Anthropic models do not process it**. No error will be thrown, it will simply be ignored. We recommend avoiding audio inputs for now until support is expanded.\
+[Read More about Audio Input -\>](/Features/Multimodality/audio)
 
 ### Getting Started
 
 All multimodal inputs use `/chat/completions` with the `messages` array.  \
 Specify the content type for each input:
 
-1. **Images** -\> `image_url`  
-2. **PDFs** -\> `file`  
+1. **Images** -\> `image_url`
+2. **PDFs** -\> `file`
+3. **Audio** -\> `audio`
 
 You can combine multiple inputs in a single request. The maximum number of files depends on the model/provider.
 
 ### Model Compatibility
 
-1. **Images** -\> Supported (URL \+ base64)  
-2. **PDFs** -\> Supported (URL \+ base64)  
-3. **Audio** -\> Ignored (no error, no output)  
+1. **Images** -\> Supported (URL \+ base64)
+2. **PDFs** -\> Supported (URL \+ base64)
+3. **Audio** -\> Ignored (no error, no output)
 
 You can combine multiple modalities in a single request, and the number of files you can send varies by provider and model.
 
@@ -41,18 +43,18 @@ You can combine multiple modalities in a single request, and the number of files
 
 **URLs (Recommended for public content)**
 
-1. Images: `https://example.com/image.jpg`  
-2. PDFs: `https://example.com/document.pdf`  
-3. Audio: ❌ Ignored  
+1. Images: `https://example.com/image.jpg`
+2. PDFs: `https://example.com/document.pdf`
+3. Audio: ❌ Ignored
 
 **Base64 Encoding (Required for local/private files)**
 
-1. Images: `data:image/jpeg;base64,{base64_data}`  
-2. PDFs: `data:application/pdf;base64,{base64_data}`  
-3. Audio: Ignored  
+1. Images: `data:image/jpeg;base64,{base64_data}`
+2. PDFs: `data:application/pdf;base64,{base64_data}`
+3. Audio: Ignored
 
 <Note>
-  URLs are preferred for large files since they avoid payload bloat.  
+  URLs are preferred for large files since they avoid payload bloat.
 
   Use base64 encoding when working with local or private files.
 </Note>

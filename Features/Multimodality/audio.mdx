@@ -1,0 +1,48 @@
+---
+title: "Audio Inputs"
+description: "How to send audio files to Pineapple models"
+---
+
+Pineapple supports sending audio files to compatible models via the API. This guide will show you how to work with audio using Pineapple.
+
+<Note>
+  - **OpenAI models** support audio inputs (speech-to-text, translation, multimodal).  
+
+  - **Anthropic models** do **not** support audio inputs. If you pass audio, it will be ignored silently (no error).  
+</Note>
+
+### Audio Inputs
+
+Requests with audio files to compatible models are available via the `/chat/completions` endpoint with the `input_audio` content type.  Audio files must be **base64-encoded** and include a `format` specification. Direct URLs are **not supported** for audio.  
+
+### Sending Audio Files
+
+<CodeGroup>
+
+```json JSON
+{
+  "model": "openai/gpt-4o-mini-transcribe",
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        { "type": "text", "text": "Please transcribe this audio file." },
+        {
+          "type": "input_audio",
+          "input_audio": {
+            "data": "base64_encoded_audio_here",
+            "format": "wav"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+</CodeGroup>
+
+### Supported Formats
+
+- `wav`
+- `mp3`

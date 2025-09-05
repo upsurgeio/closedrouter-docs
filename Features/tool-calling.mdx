@@ -14,11 +14,11 @@ The model itself does **not** directly execute the tool. Instead:
 3. You return the tool’s output back into the conversation.
 4. The model uses it to generate a final answer.
 
-Pineapple standardizes this interface across **OpenAI**, **Anthropic**, and other providers — so you can implement once and support multiple LLMs.
+Pineapple standardizes this interface across **OpenAI**, **Anthropic**, and other providers - so you can implement once and support multiple LLMs.
 
 **Supported Models**: You can discover tool-enabled models by checking `/v1/models` or filtering by `supported_parameters=tools`.
 
-### ⚙️ Request Body Examples
+### Request Body Examples
 
 Tool calling with Pineapple follows three main steps.
 
