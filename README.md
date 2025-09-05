@@ -1,12 +1,12 @@
-# ClosedRouter API Documentation
+# Pineapple API Documentation
 
 A unified API router built in-house for [Bhindi.ai](https://bhindi.io) 🚀  
 
-ClosedRouter provides a **single gateway** to interact with multiple LLM providers (OpenAI, Anthropic, and more), with consistent authentication, response formats, and error handling.
+Pineapple provides a **single gateway** to interact with multiple LLM providers (OpenAI, Anthropic, and more), with consistent authentication, response formats, and error handling.
 
 ## ✨ Key Features
 
-With ClosedRouter you can:  
+With Pineapple you can:  
 - 🔐 **Manage users & API keys** - Secure user authentication and key management
 - 🤖 **Chat (single-turn + multi-turn)** - Support for both conversation modes
 - 📡 **Stream responses in real-time** - Get responses as they're generated
@@ -65,7 +65,7 @@ Authorization: Bearer <api_key>
   "messages": [
     {
       "role": "user", 
-      "content": "Hello ClosedRouter!"
+      "content": "Hello Pineapple!"
     }
   ]
 }
@@ -107,7 +107,7 @@ Fetch user details and account information.
 
 ## 🔑 Authentication & API Keys
 
-ClosedRouter uses API keys for all requests.
+Pineapple uses API keys for all requests.
 
 ### Generate API Key
 ```bash
@@ -187,7 +187,7 @@ POST /v1/image/anthropic      # Anthropic image generation
 
 ## ⚠️ Error Handling
 
-ClosedRouter standardizes error responses across all endpoints for consistent error handling.
+Pineapple standardizes error responses across all endpoints for consistent error handling.
 
 ### Error Response Format
 ```json
@@ -212,7 +212,7 @@ ClosedRouter standardizes error responses across all endpoints for consistent er
 
 - **📚 Read the Development Guide** – Learn implementation details and advanced usage
 - **💬 Test with Postman** – Use our Postman collection to explore APIs interactively
-- **🚀 Build on Bhindi** – Integrate ClosedRouter into Bhindi AI applications
+- **🚀 Build on Bhindi** – Integrate Pineapple into Bhindi AI applications
 - **🔧 Check Examples** – Review code examples and integration patterns
 
 ---
