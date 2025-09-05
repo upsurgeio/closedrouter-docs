@@ -1,21 +1,20 @@
 ---
 title: "Structured Outputs"
-description: "ClosedRouter supports structured outputs for compatible models, ensuring responses follow a strict JSON Schema.  
-This is especially useful when you need consistent, machine-readable responses in production pipelines."
+description: "Pineapple supports structured outputs for compatible models, ensuring responses follow a strict JSON Schema.   This is especially useful when you need consistent, machine-readable responses in production pipelines."
 ---
 
 ### Overview
 
 Structured outputs allow you to:
 
-1. Enforce JSON Schema validation on model responses  
-2. Get consistent, type-safe outputs  
-3. Avoid parsing errors and hallucinated fields  
+1. Enforce JSON Schema validation on model responses
+2. Get consistent, type-safe outputs
+3. Avoid parsing errors and hallucinated fields
 4. Simplify downstream integrations
 
 ### Using Strucutred Outputs
 
-Include a `response_format` parameter in your request with `type` set to `json_schema`.  
+Include a `response_format` parameter in your request with `type` set to `json_schema`.
 
 The `json_schema` object defines the exact structure you want.
 
@@ -58,21 +57,21 @@ The model will return a JSON object that strictly follows your schema:
 
 ### Model Support
 
-Structured outputs are supported on select ClosedRouter models:
+Structured outputs are supported on select Pineapple models:
 
-- **OpenAI** → `openai/gpt-4o`, `openai/gpt-4o-mini`
-- **Anthropic** → `anthropic/claude-3-5-sonnet-20241022`, `anthropic/claude-3-opus-20240229`
+- **OpenAI** -\> `openai/gpt-4o`, `openai/gpt-4o-mini`
+- **Anthropic** -\> `anthropic/claude-3-5-sonnet-20241022`, `anthropic/claude-3-opus-20240229`
 
 ### Best Practices
 
 1. **Add property descriptions -\>** Guides the model to populate fields correctly.
-2. **Use **`strict: true`**-\>**  Ensure no unexpected or hallucinated fields.
+2. ****`Use strict: true->`****  Ensure no unexpected or hallucinated fields.
 3. **Keep schemas lena -\>** Simpler schemas yield more reliable results.
 
 ### Example Implementation
 
-```typescript typescript
-const response = await fetch('https://api.closedrouter.ai/v1/chat/completions', {
+``` typescript
+const response = await fetch('https://api.pineapple.ai/v1/chat/completions', {
   method: 'POST',
   headers: {
     Authorization: 'Bearer {{API_KEY_REF}}',
@@ -108,7 +107,7 @@ const weatherInfo = data.choices[0].message.content;
 import requests
 
 response = requests.post(
-  "https://api.closedrouter.ai/v1/chat/completions",
+  "https://api.pineapple.ai/v1/chat/completions",
   headers={
     "Authorization": f"Bearer {{API_KEY_REF}}",
     "Content-Type": "application/json",
@@ -168,4 +167,4 @@ You may encounter:
 2. **Invalid JSON Schema** -\> Request rejected before completion.
 3. **Schema violation** -\> Response may fail validation in strict mode.
 
-With ClosedRouter, you can unify structured outputs across **OpenAI** and **Anthropic**, without needing different request formats.
+With Pineapple, you can unify structured outputs across **OpenAI** and **Anthropic**, without needing different request formats.
