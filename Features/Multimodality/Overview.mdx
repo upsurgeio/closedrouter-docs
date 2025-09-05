@@ -1,0 +1,72 @@
+---
+title: "Multimodal Capabilities"
+description: "Send images, PDFs, and audio to Pineapple"
+---
+
+Pineapple supports **multiple input modalities beyond text**, so you can send images, PDFs, and audio files to compatible models through the same `/chat/completions` endpoint.  This enables rich, multimodal interactions with minimal integration overhead.
+
+### Supported Modalities
+
+**Images**\
+Send images to vision-enabled models for tasks like analysis, captioning, OCR, and visual Q&A.  Both **URL-based** and **base64-encoded** images are supported.\
+[Read More about Image Inputs -\>](/Features/Multimodality/Images)
+
+**PDFs**\
+Process PDF documents seamlessly. Pineapple extracts text and handles both **text-based PDFs** and **scanned files**.  \
+Accepted formats: **URL** or **base64-encoded**.\
+[Read More about PDF processing -\>](/Features/Multimodality/PDFs)
+
+**Audio (Not Yet Supported)**\
+You can technically send audio in requests, but **Anthropic models do not process it**. No error will be thrown, it will simply be ignored. We recommend avoiding audio inputs for now until support is expanded.
+
+### Getting Started
+
+All multimodal inputs use `/chat/completions` with the `messages` array.  \
+Specify the content type for each input:
+
+1. **Images** -\> `image_url`  
+2. **PDFs** -\> `file`  
+
+You can combine multiple inputs in a single request. The maximum number of files depends on the model/provider.
+
+### Model Compatibility
+
+1. **Images** -\> Supported (URL \+ base64)  
+2. **PDFs** -\> Supported (URL \+ base64)  
+3. **Audio** -\> Ignored (no error, no output)  
+
+You can combine multiple modalities in a single request, and the number of files you can send varies by provider and model.
+
+### Input Format Support
+
+**URLs (Recommended for public content)**
+
+1. Images: `https://example.com/image.jpg`  
+2. PDFs: `https://example.com/document.pdf`  
+3. Audio: ❌ Ignored  
+
+**Base64 Encoding (Required for local/private files)**
+
+1. Images: `data:image/jpeg;base64,{base64_data}`  
+2. PDFs: `data:application/pdf;base64,{base64_data}`  
+3. Audio: Ignored  
+
+<Note>
+  URLs are preferred for large files since they avoid payload bloat.  
+
+  Use base64 encoding when working with local or private files.
+</Note>
+
+### FAQs
+
+<AccordionGroup>
+  <Accordion title="Can I send both images and PDFs in one request?">
+    Yes. You can mix text, images, and PDFs in the same request. The model will process them together.
+  </Accordion>
+  <Accordion title="What happens if I send audio?">
+    Audio inputs are accepted but not processed. You won’t see an error, but the model won’t respond to the audio content.
+  </Accordion>
+  <Accordion title="Will audio support be added later?">
+    Yes, audio support is on the roadmap. Stay tuned for updates.
+  </Accordion>
+</AccordionGroup>
