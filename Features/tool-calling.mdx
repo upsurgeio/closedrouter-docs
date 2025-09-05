@@ -1,0 +1,183 @@
+---
+title: "Tool Calling"
+description: " Use tools (or functions) in your prompts with Pineapple. "
+---
+
+### What is Tool Calling?
+
+Tool calls (sometimes called _function calls_) let Pineapple-powered models suggest calling an **external function**.
+
+The model itself does **not** directly execute the tool. Instead:
+
+1. The model proposes a tool call.
+2. Your system executes the tool locally.
+3. You return the tool’s output back into the conversation.
+4. The model uses it to generate a final answer.
+
+Pineapple standardizes this interface across **OpenAI**, **Anthropic**, and other providers — so you can implement once and support multiple LLMs.
+
+**Supported Models**: You can discover tool-enabled models by checking `/v1/models` or filtering by `supported_parameters=tools`.
+
+### ⚙️ Request Body Examples
+
+Tool calling with Pineapple follows three main steps.
+
+**Step 1: Inference Request with Tools**
+
+Example with **OpenAI** model:
+
+```json
+{
+  "model": "openai/gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is the weather in San Francisco?"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "get_weather",
+        "description": "Get the current weather in a location",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "location": {
+              "type": "string",
+              "description": "The city and state"
+            },
+            "unit": {
+              "type": "string",
+              "enum": ["celsius", "fahrenheit"]
+            }
+          },
+          "required": ["location"]
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto"
+}
+```
+
+Example with **Anthropic** model:
+
+```json
+{
+  "model": "anthropic/claude-3-5-sonnet-20241022",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Calculate 25 * 17"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "calculator",
+        "description": "Perform arithmetic operations",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "operation": {
+              "type": "string",
+              "enum": ["add", "subtract", "multiply", "divide"]
+            },
+            "a": {"type": "number"},
+            "b": {"type": "number"}
+          },
+          "required": ["operation", "a", "b"]
+        }
+      }
+    }
+  ]
+}
+```
+
+---
+
+### **Step 2: Tool Execution (Client-Side)**
+
+When the model responds with a `tool_calls` object, you run the function in your code.\
+For example, if the LLM outputs:
+
+```json
+"tool_calls": [
+  {
+    "id": "call_123",
+    "type": "function",
+    "function": {
+      "name": "calculator",
+      "arguments": "{\"operation\":\"multiply\", \"a\":25, \"b\":17}"
+    }
+  }
+]
+```
+
+You should:
+
+```python
+def calculator(operation, a, b):
+    if operation == "multiply":
+        return a * b
+
+tool_result = calculator("multiply", 25, 17)  # -> 425
+```
+
+**Step 3: Inference Request with Tool Results**
+
+You send the tool results back into the conversation as a `"role": "tool"` message:
+
+```json
+{
+  "model": "openai/gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is the weather in NYC?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'll check the weather in New York City for you.",
+      "tool_calls": [
+        {
+          "id": "call_123",
+          "type": "function",
+          "function": {
+            "name": "get_weather",
+            "arguments": "{\"location\": \"New York City\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "content": "72°F, sunny",
+      "tool_call_id": "call_123"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "get_weather",
+        "description": "Get the current weather in a location",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "location": {"type": "string"},
+            "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+          },
+          "required": ["location"]
+        }
+      }
+    }
+  ]
+}
+```
+
+With this flow, Pineapple ensures **consistent tool calling** across all supported providers.\
+You can now build agentic loops, multi-turn conversations, and more.
