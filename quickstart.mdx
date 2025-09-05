@@ -1,0 +1,125 @@
+---
+title: "QuickStart"
+description: "Get started with Pineapple."
+---
+
+Tired of juggling multiple API keys, SDKs, and docs just to work with different AI models? Pineapple unifies access to multiple LLM providers under one simple API.  \
+Send a request once -\> route it anywhere.  \
+One key, all models.  
+
+<Tip>
+  Looking for supported models? See the models page for details.
+</Tip>
+
+### Using the OpenAI SDK
+
+Pineapple is fully compatible with the official [OpenAI SDK](https://github.com/openai/openai-python). Just point the base URL to Pineapple and use your Pineapple API key.
+
+<CodeGroup>
+
+```python python
+from openai import OpenAI
+
+client = OpenAI(
+  base_url="https://api.pineapple.ai/v1",
+  api_key="<PINEAPPLE_API_KEY>",
+)
+
+completion = client.chat.completions.create(
+  model="openai/gpt-4o",
+  messages=[
+    { "role": "user", "content": "Hello from Pineapple!" }
+  ]
+)
+print(completion.choices[0].message.content)
+```
+
+
+```typescript typescript
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  baseURL: "https://api.pineapple.ai/v1",
+  apiKey: "<PINEAPPLE_API_KEY>",
+});
+
+async function main() {
+  const completion = await client.chat.completions.create({
+    model: "anthropic/claude-3-sonnet",
+    messages: [
+      { role: "user", content: "Hello from Pineapple!" },
+    ],
+  });
+
+  console.log(completion.choices[0].message);
+}
+
+main();
+```
+
+</CodeGroup>
+
+### Using the Pineapple API directly
+
+<Tip>
+  You can also call the API directly with `fetch`, `requests`, or `curl`.
+</Tip>
+
+<CodeGroup>
+
+```python python
+import requests
+import json
+
+response = requests.post(
+  "https://api.pineapple.ai/v1/chat/completions",
+  headers={
+    "Authorization": "Bearer <PINEAPPLE_API_KEY>",
+    "Content-Type": "application/json",
+  },
+  data=json.dumps({
+    "model": "openai/gpt-3.5-turbo",
+    "messages": [
+      { "role": "user", "content": "Hello from Pineapple!" }
+    ]
+  })
+)
+
+print(response.json())
+```
+
+
+```typescript typescript
+fetch("https://api.pineapple.ai/v1/chat/completions", {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer <PINEAPPLE_API_KEY>",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    model: "anthropic/claude-3-opus",
+    messages: [
+      { role: "user", content: "Hello from Pineapple!" },
+    ],
+  }),
+});
+```
+
+
+```shellscript shell
+curl https://api.pineapple.ai/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $PINEAPPLE_API_KEY" \
+  -d '{
+    "model": "openai/gpt-3.5-turbo",
+    "messages": [
+      { "role": "user", "content": "Hello from Pineapple!" }
+    ]
+  }'
+```
+
+</CodeGroup>
+
+### Streaming
+
+The Pineapple API also supports streaming responses, so you can get tokens as they’re generated - perfect for chat UIs and real-time applications.
