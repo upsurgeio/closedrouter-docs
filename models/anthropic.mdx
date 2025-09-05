@@ -12,7 +12,7 @@ The following Anthropic models are supported:
 Use this endpoint to send a single-turn or multi-turn chat request.
 
 ```bash
-curl https://api.closedrouter.com/v1/chat/completions \
+curl https://api.pineapple.com/v1/chat/completions \
   -H "Authorization: Bearer $API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -32,7 +32,7 @@ Set `"stream": true` to receive partial tokens in real time.\
 This is useful for chat interfaces where users want instant feedback.
 
 ```bash
-curl https://api.closedrouter.com/v1/chat/completions \
+curl https://api.pineapple.com/v1/chat/completions \
   -H "Authorization: Bearer $API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -54,7 +54,7 @@ Supports **tool calls** that allow the model to decide when to invoke a function
 This is useful for building agent-like workflows where the model decides how and when to call external APIs.
 
 ```bash
-curl https://api.closedrouter.com/v1/chat/completions \
+curl https://api.pineapple.com/v1/chat/completions \
   -H "Authorization: Bearer $API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -91,11 +91,11 @@ curl https://api.closedrouter.com/v1/chat/completions \
 
 ### 🏗 Structured Output
 
-ClosedRouter can force responses into a **strict JSON schema**, ensuring outputs are machine-readable.  \
+Pineapple can force responses into a **strict JSON schema**, ensuring outputs are machine-readable.  \
 This helps when integrating AI into systems where you need predictable formats.
 
 ```bash
-curl https://api.closedrouter.com/v1/chat/completions \
+curl https://api.pineapple.com/v1/chat/completions \
   -H "Authorization: Bearer $API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -119,7 +119,7 @@ Supports **vision models** where you can pass an image URL (or base64 data) alon
 The model can then analyze, describe, or reason about the image.
 
 ```bash
-curl https://api.closedrouter.com/v1/images/generations \
+curl https://api.pineapple.com/v1/images/generations \
   -H "Authorization: Bearer $API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
