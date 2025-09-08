@@ -1,0 +1,74 @@
+---
+title: "Authentication"
+description: "API Authentication"
+---
+
+Pineapple uses **Bearer tokens** for authentication.\
+You can manage and create your API keys in the Pineapple dashboard.
+
+<Warning>
+  Pineapple API keys are powerful: they can be used to track usage, set credit limits, or integrate with OAuth flows. Always store keys securely - never commit them to public repos. 
+</Warning>
+
+### Using an API Key
+
+If calling Pineapple API directly, include the API key in the `Authorization` header:
+
+<CodeGroup>
+
+```typescript typescript
+fetch('https://api.pineapple.ai/v1/chat/completions', {
+  method: 'POST',
+  headers: {
+    Authorization: 'Bearer <PINEAPPLE_API_KEY>',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    model: 'openai/gpt-4o',
+    messages: [{ role: 'user', content: 'What is the meaning of life?' }],
+  }),
+});
+```
+
+
+```python python
+import openai
+
+openai.api_base = "https://api.pineapple.ai/v1"
+openai.api_key = "<PINEAPPLE_API_KEY>"
+
+response = openai.ChatCompletion.create(
+  model="openai/gpt-4o",
+  messages=[{"role": "user", "content": "Hello Pineapple!"}],
+)
+
+print(response.choices[0].message)
+```
+
+
+```shellscript shell
+curl https://api.pineapple.ai/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $PINEAPPLE_API_KEY" \
+  -d '{
+  "model": "openai/gpt-4o",
+  "messages": [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "Hello!"}
+  ]
+}'
+```
+
+</CodeGroup>
+
+<Note>
+  can add pineapple's dashboard and also check doc once, acc to openrouter
+</Note>
+
+### Key Security
+
+<Warning>
+  Always keep your Pineapple API keys private. If you suspect exposure, immediately delete the compromised key from [your dashboard](https://pineapple.ai/settings/keys) and create a new one.
+</Warning>
+
+Best practice: store keys in **environment variables**, not directly in code.

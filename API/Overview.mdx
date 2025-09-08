@@ -1,0 +1,148 @@
+---
+title: "API Reference"
+description: "An overview of Pineapple's API."
+---
+
+Pineapple provides a **unified Chat Completions API** across OpenAI and Anthropic. The schema is designed to be **OpenAI-compatible** while supporting Pineapple-specific routing and model options.
+
+### Requests
+
+**Completions Request Format**\
+The main endpoint for completions is: POST /chat/completions\
+Here’s the request schema in TypeScript:
+
+<CodeGroup>
+
+```typescript typescript
+// Definitions of subtypes are below
+type Request = {
+  // Either "messages" or "prompt" is required
+  messages?: Message[];
+  prompt?: string;
+
+  // Model selection (defaults to user/org default if unspecified)
+  model?: string; // See "Supported Models" section
+
+  response_format?: { type: 'json_object' };
+
+  stop?: string | string[];
+  stream?: boolean;
+
+  max_tokens?: number;
+  temperature?: number;
+
+  // Tool calling (OpenAI-compatible)
+  tools?: Tool[];
+  tool_choice?: ToolChoice;
+
+  // Advanced parameters
+  seed?: number;
+  top_p?: number;
+  top_k?: number;
+  frequency_penalty?: number;
+  presence_penalty?: number;
+  repetition_penalty?: number;
+  logit_bias?: { [key: number]: number };
+  min_p?: number;
+  top_a?: number;
+
+  // Pineapple-only parameters
+  models?: string[];   // For model routing
+  route?: 'fallback';  // Smart routing fallback
+  provider?: ProviderPreferences; // Provider routing
+  user?: string;       // Stable identifier for your end-users
+};
+```
+
+</CodeGroup>
+
+**Example Request**
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="YOUR_PINEAPPLE_API_KEY",
+    base_url="https://api.pineapple.ai/v1"
+)
+
+completion = client.chat.completions.create(
+    model="openai/gpt-4o",
+    messages=[
+        {"role": "user", "content": "What is the meaning of life?"}
+    ]
+)
+
+print(completion.choices[0].message)
+```
+
+**Headers**\
+You can set optional headers for discoverability:
+
+- `HTTP-Referer`: Identifies your app on [pineapple.ai](http://pineapple.ai)
+- `X-Title`: Sets/modifies your app's title
+
+```typescript
+fetch('https://api.pineapple.ai/v1/chat/completions', {
+  method: 'POST',
+  headers: {
+    Authorization: 'Bearer <PINEAPPLE_API_KEY>',
+    'HTTP-Referer': '<YOUR_SITE_URL>',
+    'X-Title': '<YOUR_APP_NAME>',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    model: 'openai/gpt-4o',
+    messages: [{ role: 'user', content: 'Hello, Pineapple!' }],
+  }),
+});
+```
+
+<Info>
+  If the `model` parameter is omitted, Pineapple will select the default for the user/org. If multiple providers/models are available, Pineapple’s routing system automatically selects the best option (based on price, availability, and latency) and falls back if a provider fails.
+</Info>
+
+**Responses**\
+Pineapple normalizes responses to comply with the OpenAI Chat API schema.
+
+```typescript
+type Response = {
+  id: string;
+  object: 'chat.completion' | 'chat.completion.chunk';
+  created: number;
+  model: string;
+  choices: (NonStreamingChoice | StreamingChoice)[];
+  usage?: ResponseUsage;
+};
+```
+
+Here's an exmaple:
+
+```json
+{
+  "id": "gen-xxxxxxxx",
+  "object": "chat.completion",
+  "created": 1693350000,
+  "model": "openai/gpt-4o",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "message": {
+        "role": "assistant",
+        "content": "Hello there!"
+      }
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 10,
+    "completion_tokens": 5,
+    "total_tokens": 15
+  }
+}
+```
+
+**Finish Reason**
+
+**Querying Cost and Stats**
+
+Pineapple ensures your requests remain **provider-agnostic, resilient, and cost-optimized**, while staying fully **OpenAI-compatible**.

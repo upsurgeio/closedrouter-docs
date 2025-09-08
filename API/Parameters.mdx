@@ -1,0 +1,81 @@
+---
+title: "Parameters"
+description: "Description of your new file."
+---
+
+Sampling parameters shape the token generation process of the model.\
+You may send any parameters from the list below, as well as others, to **Pineapple**.
+
+Pineapple defaults to the values listed here if parameters are absent from your request (e.g. `temperature` defaults to 1.0). (CHECK ACC TO OPENROUTER)\
+This page lists the request parameters you can send to `/chat/completions`.
+
+If a parameter is unsupported by the selected provider, it will be ignored.
+
+<Note>
+  Please check the documentation for the specific model/provider to confirm which parameters are supported.
+</Note>
+
+### Universal Parameters
+
+## Universal Parameters
+
+**Temperature**
+
+- **Key**: `temperature`
+- _float_, 0.0 – 2.0
+- Default: `1.0`
+
+**Top P**
+
+- **Key**: `top_p`
+- _float_, 0.0 – 1.0
+- Default: `1.0`
+
+**Max Tokens**
+
+- **Key**: `max_tokens`
+- _integer_ ≥ 1
+
+**Stop**
+
+- **Key**: `stop`
+- _string_ or _array of strings_\
+  Stops generation when matched.
+
+### OpenAI-specific
+
+**Tools**
+
+- **Key**: `tools`
+- Supports OpenAI tool calling API.
+
+**Tool Choice**
+
+- **Key**: `tool_choice`
+- `"none" | "auto" | "required" | {object}"`
+
+**Parallel Tool Calls**
+
+- **Key**: `parallel_tool_calls`
+- Default: `true`
+
+**Response Format**
+
+- **Key**: `response_format`
+- `{ "type": "json_object" }` → JSON output
+
+**Logit Bias**
+
+- **Key**: `logit_bias`
+- Bias token selection by ID.
+
+**Seed**
+
+- **Key**: `seed`
+- Enables deterministic outputs (when supported).
+
+### Anthropic-specific
+
+- `system` messages must be passed in the root `system` field (not inside `messages`).
+- No `logit_bias` support.
+- `response_format` is not yet supported — JSON enforcement must be done via prompt instructions.
