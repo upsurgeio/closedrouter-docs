@@ -1,0 +1,51 @@
+---
+title: "Streaming"
+description: "Description of your new file."
+---
+
+The Pineapple API supports **streaming responses** from any model, including OpenAI and Anthropic. This is useful for building chat interfaces where the UI updates as the model generates output in real time.
+
+To enable streaming, set the `stream` parameter to `true` in your request. Instead of waiting for the full completion, the API will stream chunks of the response.
+
+### Example Requests
+
+**OpenAI :**
+
+```json
+{
+  "model": "openai/gpt-3.5-turbo",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Write a short story about a robot learning to paint."
+    }
+  ],
+  "stream": true,
+  "max_tokens": 500
+}
+```
+
+**Anthropic:**
+
+```json
+{
+  "model": "anthropic/claude-3-5-sonnet-20241022",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain quantum computing to a 10-year-old."
+    }
+  ],
+  "stream": true,
+  "max_tokens": 300
+}
+```
+
+### Cancelling Streams
+
+You can cancel a streaming request by closing the connection:
+
+- In **Python**, close the request stream.
+- In **TypeScript**, call `AbortController.abort()`.
+
+This stops billing immediately for supported providers.
