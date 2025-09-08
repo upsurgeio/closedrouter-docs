@@ -1,14 +1,15 @@
-# ClosedRouter API Documentation
+# Pineapple API Documentation
 
-A unified API router built in-house for [Bhindi.ai](https://bhindi.io) 🚀  
+A unified API router built in-house for [Bhindi.ai](https://bhindi.io) 🚀
 
 ClosedRouter provides a **single gateway** to interact with multiple LLM providers (OpenAI, Anthropic, and more), with consistent authentication, response formats, and error handling.
 
 ## ✨ Key Features
 
-With ClosedRouter you can:  
+With ClosedRouter you can:
+
 - 🔐 **Manage users & API keys** - Secure user authentication and key management
-- 🤖 **Chat (single-turn + multi-turn)** - Support for both conversation modes
+- 🤖 **Chat (single-turn \+ multi-turn)** - Support for both conversation modes
 - 📡 **Stream responses in real-time** - Get responses as they're generated
 - 🛠️ **Perform tool calls** - Execute functions and tools through LLMs
 - 🗂️ **Enforce structured outputs** - Get consistent, structured responses
@@ -19,7 +20,7 @@ With ClosedRouter you can:
 
 ## 📖 Complete Documentation
 
-**📚 [Read the Full Development Guide →](./development-guide.mdx)**  
+[**📚 Read the Full Development Guide →**](./development-guide.mdx)
 
 For detailed specifications, advanced examples, and the full API reference, see our complete guide.
 
@@ -46,16 +47,19 @@ For detailed specifications, advanced examples, and the full API reference, see 
 ### 3-Step Setup
 
 #### 1. Register a User
+
 ```bash
 POST /v1/register-user
 ```
 
 #### 2. Create an API Key
+
 ```bash
 POST /v1/create-api-key
 ```
 
 #### 3. Send Your First Chat Request
+
 ```bash
 POST /v1/chat/openai
 Authorization: Bearer <api_key>
@@ -76,15 +80,19 @@ Authorization: Bearer <api_key>
 ## 🩺 Health & Models
 
 ### System Status
+
 ```bash
 GET /v1/health
 ```
+
 Check system status and availability.
 
 ### Available Models
+
 ```bash
 GET /v1/models
 ```
+
 Retrieve available models across OpenAI & Anthropic providers.
 
 ---
@@ -92,15 +100,19 @@ Retrieve available models across OpenAI & Anthropic providers.
 ## 👤 User Management
 
 ### User Registration
+
 ```bash
 POST /v1/register-user
 ```
+
 Register a new user account.
 
 ### User Profile
+
 ```bash
 GET /v1/user-profile
 ```
+
 Fetch user details and account information.
 
 ---
@@ -110,13 +122,17 @@ Fetch user details and account information.
 ClosedRouter uses API keys for all requests.
 
 ### Generate API Key
+
 ```bash
 POST /v1/create-api-key
 ```
+
 Generate a new API key for authentication.
 
 ### Usage
+
 Include the API key in every request header:
+
 ```bash
 Authorization: Bearer <your_api_key>
 ```
@@ -126,12 +142,14 @@ Authorization: Bearer <your_api_key>
 ## 💬 Chat APIs
 
 ### OpenAI-Compatible Endpoints
+
 ```bash
 POST /v1/chat/openai          # Single-turn chat
 POST /v1/chat/openai/multi-turn  # Multi-turn conversation
 ```
 
 ### Anthropic-Compatible Endpoints
+
 ```bash
 POST /v1/chat/anthropic       # Single-turn chat
 POST /v1/chat/anthropic/sys-message  # System message support
@@ -190,6 +208,7 @@ POST /v1/image/anthropic      # Anthropic image generation
 ClosedRouter standardizes error responses across all endpoints for consistent error handling.
 
 ### Error Response Format
+
 ```json
 {
   "error": {
@@ -200,6 +219,7 @@ ClosedRouter standardizes error responses across all endpoints for consistent er
 ```
 
 ### Common Error Codes
+
 - **Invalid Model** - Model ID not found or unsupported
 - **Missing Auth Header** - Authorization header is required
 - **Invalid API Key** - API key is invalid or expired
@@ -218,5 +238,6 @@ ClosedRouter standardizes error responses across all endpoints for consistent er
 ---
 
 <div align="center">
-  <strong>Built with ❤️ for the Bhindi AI ecosystem</strong>
+Built with ❤️ for the Bhindi AI ecosystem
+
 </div>
