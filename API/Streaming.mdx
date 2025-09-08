@@ -41,6 +41,17 @@ To enable streaming, set the `stream` parameter to `true` in your request. Inste
 }
 ```
 
+### Additional Information
+
+- Pineapple uses **SSE (Server-Sent Events)** for streaming.
+- You may occasionally see comments like:
+
+```
+: PINEAPPLE PROCESSING
+```
+
+These can be ignored per the [SSE spec](https://html.spec.whatwg.org/multipage/server-sent-events.html#event-stream-interpretation).
+
 ### Cancelling Streams
 
 You can cancel a streaming request by closing the connection:

@@ -1,0 +1,60 @@
+---
+title: "Limits"
+description: "Rate Limits"
+---
+
+<Tip>
+  Creating additional Pineapple accounts or API keys will not bypass rate limits, since capacity is governed globally. However, different models may have different rate limits - so you can distribute usage across them if needed.
+</Tip>
+
+### Rate Limits and Credits Remaining
+
+To check the rate limit or credits left on your Pineapple API key, make a **GET** request to:
+
+```bash
+https://api.pineapple.ai/v1/key
+```
+
+<CodeGroup>
+
+```typescript typescript
+const response = await fetch('https://api.pineapple.ai/v1/key', {
+  method: 'GET',
+  headers: {
+    Authorization: 'Bearer {{API_KEY_REF}}',
+  },
+});
+```
+
+
+```python python
+import requests, json
+
+response = requests.get(
+  url="https://api.pineapple.ai/v1/key",
+  headers={ "Authorization": f"Bearer {{API_KEY_REF}}" }
+)
+
+print(json.dumps(response.json(), indent=2))
+```
+
+</CodeGroup>
+
+### Example Response
+
+```json
+{
+  "data": {
+    "label": "Main Key",
+    "usage": 120,          // Number of credits used
+    "limit": 10000,        // Credit limit for the key (null if unlimited)
+    "is_free_tier": false  // Whether this key is on the free tier
+  }
+}
+```
+
+### Notes
+
+- **Free usage limits**: If using free-tier models, daily and per-minute request caps apply.
+- **DDoS protection**: Abusive or excessive request bursts may be blocked.
+- **Negative balance**: If your account balance is below zero, all requests (including free-tier) will fail until credits are added.
