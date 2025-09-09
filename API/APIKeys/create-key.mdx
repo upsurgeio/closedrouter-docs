@@ -1,0 +1,47 @@
+---
+title: "Create API key"
+description: "Description of your new file."
+---
+
+Creates a new API key. Requires a Provisioning API key.
+
+### **Headers**
+
+<ParamField path="Authorization" type="string" required>
+  Bearer authentication of the form `Bearer <token>`, where token is your auth token.
+</ParamField>
+
+### **Request**
+
+<ParamField path="name" type="string" required>
+  Displays name for the API key
+
+  <ParamField path="limit" type="double">
+    Optional credit limit for the key
+
+    ### Response
+
+    Create API key
+
+    <ParamField path="data" type="object">
+      <Expandable title="6 properties">
+        <ParamField path="name" type="string or null">
+          <ParamField path="label" type="string or null">
+            <ParamField path="limit" type="double or null">
+              <ParamField path="disabled" type="boolean or null">
+                <ParamField path="created_at" type="string or null">
+                  <ParamField path="hash" type="string or null">
+                    The hash of the API key, used for making requests to the /keys/{hash} endpoint
+                  </ParamField>
+                </ParamField>
+              </ParamField>
+            </ParamField>
+          </ParamField>
+        </ParamField>
+      </Expandable>
+    </ParamField>
+    <ParamField path="key" type="string or null">
+      The API key string itself. Only returned when creating a new key.
+    </ParamField>
+  </ParamField>
+</ParamField>

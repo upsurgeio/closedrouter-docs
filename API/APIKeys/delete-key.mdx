@@ -1,0 +1,28 @@
+---
+title: "Delete API key"
+description: "Description of your new file."
+---
+
+Deletes an API key. Requires a Provisioning API key.
+
+### Path parameters
+
+<ParamField path="hash" type="string" required>
+  ### Headers
+
+  <ParamField path="authorisation" type="string" required>
+    Bearer authentication of the form `Bearer <token>`, where token is your auth token.
+
+    ### Response
+
+    Sucessfully deleted API key
+
+    <ParamField path="data" type="object">
+      <Expandable title="1 property">
+        <ParamField path="success" type="boolean">
+          
+        </ParamField>
+      </Expandable>
+    </ParamField>
+  </ParamField>
+</ParamField>
