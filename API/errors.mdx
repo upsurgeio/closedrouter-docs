@@ -1,0 +1,123 @@
+---
+title: "Errors"
+description: "Description of your new file."
+---
+
+For errors, Pineapple returns a JSON response with the following shape:
+
+```typescript
+type ErrorResponse = {
+  error: {
+    code: number;
+    message: string;
+    metadata?: Record<string, unknown>;
+  };
+};
+```
+
+The HTTP Response will have the same status code as `error.code`, forming a request error if:
+
+- Your original request is invalid
+- Your API key/account is out of credits
+
+Otherwise, the returned HTTP response status will be`200` and any error that occurs while the LLM is producing output will be emitted in the response body or as an SSE data event.
+
+Example code for printing errors in JavaScript:
+
+```javascript
+const request = await fetch('https://api.pineapple.ai/v1/chat/completions', {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${process.env.PINEAPPLE_API_KEY}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    model: "openai/gpt-4o",
+    messages: [{ role: "user", content: "Hello world" }]
+  })
+});
+
+console.log(request.status); // Will be an error code unless the model started processing
+const response = await request.json();
+console.error(response.error?.code);
+console.error(response.error?.message);
+```
+
+### Error Codes
+
+- **400**: Bad Request (invalid or missing params, CORS)
+- **401**: Invalid credentials (expired/disabled/invalid API key)
+- **402**: Your account or API key has insufficient credits
+- **403**: Your chosen model requires moderation and your input was flagged
+- **408**: Your request timed out
+- **429**: You are being rate limited
+- **502**: The model provider is down or returned an invalid response
+- **503**: No available model provider meets your routing requirements
+
+### Moderation Errors
+
+If your input was flagged, the `error.metadata` will contain information about the issue:
+
+```typescript
+type ModerationErrorMetadata = {
+  reasons: string[];
+  flagged_input: string;
+  provider_name: string;
+  model_slug: string;
+};
+```
+
+### Provider Errors
+
+If the model provider encounters an error, the `error.metadata` will contain information about the issue:
+
+```typescript
+type ProviderErrorMetadata = {
+  provider_name: string;
+  raw: unknown;
+};
+```
+
+### Pineapple-Specific Error Examples
+
+1. **Invalid Model**
+
+```json
+{
+  "model": "invalid/model-name",
+  "messages": [
+    { "role": "user", "content": "Test" }
+  ]
+}
+```
+
+2. **Invalid API Key**
+
+```json
+{
+  "error": {
+    "code": 401,
+    "message": "Invalid API key"
+  }
+}
+```
+
+3. **Missing Auth**
+
+```json
+{
+  "model": "openai/gpt-3.5-turbo",
+  "messages": [
+    { "role": "user", "content": "Test" }
+  ]
+}
+```
+
+### When No Content is Generated
+
+Occasionally, the model may not generate any content. This typically occurs when:
+
+- The model is warming up from a cold start
+- The system is scaling up to handle more requests
+
+If persistent, consider retrying or using a different provider. Note that prompt processing costs may still apply.
