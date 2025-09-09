@@ -1,0 +1,72 @@
+---
+title: "Get current API key"
+---
+
+Get information on the API key associated with the current authentication session
+
+### **Headers**
+
+<ParamField path="Authorization" type="string" required>
+  Bearer authentication of the form `Bearer <token>`, where token is your auth token.
+
+  ### **Response**
+
+  Successfully retrieved API key information
+
+  <ParamField path="data" type="object">
+    <Expandable title="Content">
+      <ParamField path="label" type="string">
+        Label or name of the API key
+
+        <ParamField path="limit" type="double or null">
+          Maximum credit limit for the API key if set
+
+          <ParamField path="usage" type="double">
+            Current usage amount of the API key
+
+            <ParamField path="if_free_tier" type="boolean">
+              Whether the API key is on the free tier
+
+              <ParamField path="limit_remaining" type="double or null">
+                Depreceated - Remaining credits available for the API key
+
+                <ParamField path="is_provisioning_key" type="boolean">
+                  Whether the API key is a provisioning key
+
+                  <ParamField path="rate_limit" type="object or null">
+                    Depreceated - Legacy rate limit information about a key. Will always return -1
+                  </ParamField>
+                </ParamField>
+              </ParamField>
+            </ParamField>
+          </ParamField>
+        </ParamField>
+      </ParamField>
+    </Expandable>
+  </ParamField>
+  ### Errors
+</ParamField>
+
+<AccordionGroup>
+  <Accordion title="Unauthorised Error">
+    Unauthorised - API key is required
+
+    <ParamField path="error" type="string">
+      Error Message
+    </ParamField>
+  </Accordion>
+  <Accordion title="Method Not Allowed Error">
+    Method Not Allowed - Only GET method is supported
+
+    <ParamField path="error" type="string">
+      Error message
+    </ParamField>
+  </Accordion>
+  <Accordion title="Internal Server Error">
+    Internal server error
+
+    <ParamField path="error" type="string">
+      Error message
+    </ParamField>
+  </Accordion>
+</AccordionGroup>
