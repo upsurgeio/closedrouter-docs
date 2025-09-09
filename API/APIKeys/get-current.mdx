@@ -4,6 +4,11 @@ title: "Get current API key"
 
 Get information on the API key associated with the current authentication session
 
+```bash GET /api/v1/key
+curl https://pineapple.ai/api/v1/key \
+     -H "Authorization: Bearer <token>"
+```
+
 ### **Headers**
 
 <ParamField path="Authorization" type="string" required>
@@ -44,6 +49,37 @@ Get information on the API key associated with the current authentication sessio
       </ParamField>
     </Expandable>
   </ParamField>
+  <CodeGroup>
+
+  ```typescript 200 Retrieved
+  {
+    "data": {
+      "label": "My Pineapple API Key",
+      "limit": 10,
+      "usage": 3.25,
+      "is_free_tier": false,
+      "limit_remaining": 6.75,
+      "is_provisioning_key": false
+    }
+  }
+  ```
+
+  
+  ```bash 401 Unauthorised
+  {
+    "error": "string"
+  }
+  ```
+
+  
+  ```bash 405 Method Not Allowed
+  {
+    "error": "string"
+  }
+  ```
+
+  </CodeGroup>
+
   ### Errors
 </ParamField>
 
