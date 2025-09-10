@@ -1,0 +1,56 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "ClosedRouter Docs",
+  "colors": {
+    "primary": "#0EA5E9",
+    "light": "#FFFFFF",
+    "dark": "#0B1220"
+  },
+  "favicon": "/favicon.ico",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Getting Started",
+        "pages": ["quickstart", "FAQs", "Principles"]
+      },
+      {
+        "group": "Features",
+        "pages": [
+          "Features/API-keys",
+          "Features/model-routing",
+          "Features/structured-outputs",
+          "Features/tool-calling",
+          "Features/Multimodality/Overview",
+          "Features/Multimodality/Images",
+          "Features/Multimodality/audio",
+          "Features/Multimodality/PDFs"
+        ]
+      },
+      {
+        "group": "API",
+        "pages": [
+          "API/Overview",
+          "API/Authentication",
+          "API/Parameters",
+          "API/Completion",
+          "API/Streaming",
+          "API/LIMITS",
+          "API/errors",
+          "API/APIKeys/create-key",
+          "API/APIKeys/get-current",
+          "API/APIKeys/list-api",
+          "API/APIKeys/delete-key"
+        ]
+      },
+      {
+        "group": "Models",
+        "pages": ["models", "models/openai", "models/anthropic"]
+      },
+      {
+        "group": "Use Cases",
+        "pages": ["UseCases/usage-acc"]
+      }
+    ]
+  }
+}
